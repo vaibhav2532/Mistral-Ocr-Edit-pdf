@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Markdown</title>
+    <style>
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+        textarea {
+            flex: 1;
+            width: 100%;
+            font-family: monospace;
+            font-size: 16px;
+            padding: 10px;
+        }
+        /* Sticky Buttons */
+        .buttons {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            border-bottom: 2px solid #ddd;
+            z-index: 1000;
+        }
+        .buttons button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Markdown</h2>
+
+    <form action="{{ url_for('edit_markdown', md_filename=md_filename, pdf_filename=request.args.get('pdf_filename')) }}" method="post">
+        <!-- Sticky Buttons on Top -->
+        <div class="buttons">
+            <button type="submit">Save</button>
+            <a href="{{ url_for('preview_files', pdf_filename=request.args.get('pdf_filename'), md_filename=md_filename) }}">
+                <button type="button">Cancel</button>
+            </a>
+        </div>
+
+        <div class="editor-container">
+            <textarea name="markdown_content">{{ content }}</textarea>
+        </div>
+    </form>
+</body>
+</html>
